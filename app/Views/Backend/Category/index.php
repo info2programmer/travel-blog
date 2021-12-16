@@ -154,12 +154,12 @@
                                                                             <td><?= $list['category_name'] ?></td>
                                                                             <td><?= $list['name'] ?></td>
                                                                             <td>
-                                                                                <a class="btn btn-warning">Edit</a>
-                                                                                <a class="btn btn danger">Delete</a>
+                                                                                <a class="btn btn-warning btn-sm">Edit</a>
+                                                                                <a class="btn btn-danger btn-sm">Delete</a>
                                                                                 <?php if ($list['publised'] == "1") : ?>
-                                                                                    <a class="btn btn-primary">Un-Publish</a>
+                                                                                    <a class="btn btn-primary btn-sm">Un-Publish</a>
                                                                                 <?php else : ?>
-                                                                                    <a class="btn btn-info">Publish</a>
+                                                                                    <a class="btn btn-info btn-sm">Publish</a>
                                                                                 <?php endif ?>
                                                                             </td>
                                                                         </tr>
