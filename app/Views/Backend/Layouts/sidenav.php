@@ -117,7 +117,7 @@
         </ul>
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Category</div>
         <ul class="pcoded-item pcoded-left-item">
-            <li <?php if (url_is('admin/category-list') || url_is('admin/category-add') || url_is('admin/category-edit')) : ?> class="active" <?php endif ?>>
+            <li <?php if (url_is('admin/category-list') || url_is('admin/category-add') || url_is('backend/category*')) : ?> class="active" <?php endif ?>>
                 <a href="<?= site_url() ?>admin/category-list" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Manage Cateory</span>
