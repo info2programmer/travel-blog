@@ -1,4 +1,5 @@
 <nav class="pcoded-navbar">
+
     <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
@@ -26,7 +27,7 @@
 
         <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="active">
+            <li <?php if (url_is('admin/dashboard')) : ?> class="active" <?php endif ?>>
                 <a href="<?= site_url() ?>admin/dashboard" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
@@ -116,7 +117,7 @@
         </ul>
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Category</div>
         <ul class="pcoded-item pcoded-left-item">
-            <li>
+            <li <?php if (url_is('admin/category-list') || url_is('admin/category-add') || url_is('admin/category-edit')) : ?> class="active" <?php endif ?>>
                 <a href="<?= site_url() ?>admin/category-list" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
                     <span class="pcoded-mtext" data-i18n="nav.form-components.main">Manage Cateory</span>

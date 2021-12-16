@@ -12,12 +12,15 @@ class Category extends BaseController
     {
         $this->categoryModel = new \App\Models\Category();
     }
-    public function _remap($method)
+    public function _remap($method, ...$params)
     {
         if (!session()->has('admin_id')) {
             return redirect()->to(site_url() . "admin/login")->with('warning', "You must login first");
         }
-        return $this->$method();
+        // if(...$params){
+
+        // }
+        return $this->$method(...$params);
     }
 
     public function index()
@@ -30,6 +33,8 @@ class Category extends BaseController
         // dd($this->categoryModel->getLastQuery()->getQuery());
         return view('Backend/Category/index', ['data' => $categoryList]);
     }
+
+
 
     // This function for crate new category
     public function createCategory()
@@ -48,5 +53,47 @@ class Category extends BaseController
             }
         }
         return view('Backend/Category/category-add-edit-view');
+    }
+    // This function for delete category
+    public function deleteData($id)
+    {
+        $category = $this->categoryModel->find($id);
+
+        if ($category) {
+            $this->categoryModel->delete($id);
+            return redirect()->to(site_url() . "admin/category-list")->with('error', "category deleted");
+        } else {
+            return redirect()->to(site_url() . "admin/category-list")->with('error', "no category found");
+        }
+    }
+
+    // This functiuon for publish and un published
+    public function changeStatus($id, $status)
+    {
+        $category = $this->categoryModel->find($id);
+        if ($category) {
+            $this->categoryModel->update($id, ['publised' => $status]);
+            return redirect()->to(site_url() . "admin/category-list")->with('success', "category status updated");
+        } else {
+            return redirect()->to(site_url() . "admin/category-list")->with('error', "no category found");
+        }
+    }
+
+    public function editCategory($id)
+    {
+        $category = $this->categoryModel->find($id);
+        if ($category) {
+            // 
+            if ($this->request->getMethod() == "post") {
+                $obj = [
+                    'category_name' => esc($this->request->getPost('category_name'))
+                ];
+                $this->categoryModel->update($id, $obj);
+                return redirect()->to(site_url() . "admin/category-list")->with('success', "category updated");
+            }
+            return view('Backend/Category/category-add-edit-view', ['data' => $category, 'mode' => 'edit']);
+        } else {
+            return redirect()->to(site_url() . "admin/category-list")->with('error', "no category found");
+        }
     }
 }

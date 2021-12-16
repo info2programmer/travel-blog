@@ -128,6 +128,15 @@
                                     <div class="page-body">
                                         <div class="row">
                                             <div class="col-sm-12">
+                                                <?php if (session()->has('warning')) : ?>
+                                                    <p class="alert alert-warning"><?= session('warning') ?></p>
+                                                <?php endif ?>
+                                                <?php if (session()->has('success')) : ?>
+                                                    <p class="alert alert-warning"><?= session('success') ?></p>
+                                                <?php endif ?>
+                                                <?php if (session()->has('error')) : ?>
+                                                    <p class="alert alert-danger"><?= session('error') ?></p>
+                                                <?php endif ?>
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <h5>Category List</h5>
@@ -154,13 +163,16 @@
                                                                             <td><?= $list['category_name'] ?></td>
                                                                             <td><?= $list['name'] ?></td>
                                                                             <td>
-                                                                                <a class="btn btn-warning btn-sm">Edit</a>
-                                                                                <a class="btn btn-danger btn-sm">Delete</a>
+                                                                                <a href="<?= site_url() ?>backend/category/editCategory/<?= $list['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+
+                                                                                <a class="btn btn-danger btn-sm" href="<?= site_url() ?>backend/category/deleteData/<?= $list['id'] ?>" onclick="return confirm('Are you sure to delete this category?')">Delete</a>
+
                                                                                 <?php if ($list['publised'] == "1") : ?>
-                                                                                    <a class="btn btn-primary btn-sm">Un-Publish</a>
+                                                                                    <a href="<?= site_url() ?>backend/category/changeStatus/<?= $list['id'] ?>/0" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure?')">Un-Publish</a>
                                                                                 <?php else : ?>
-                                                                                    <a class="btn btn-info btn-sm">Publish</a>
+                                                                                    <a href="<?= site_url() ?>backend/category/changeStatus/<?= $list['id'] ?>/1" class="btn btn-info btn-sm" onclick="return confirm('Are you sure?')">Publish</a>
                                                                                 <?php endif ?>
+
                                                                             </td>
                                                                         </tr>
                                                                     <?php endforeach ?>

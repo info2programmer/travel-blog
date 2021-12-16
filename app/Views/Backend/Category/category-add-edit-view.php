@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Create New Category </title>
+    <title> <?php if (isset($mode) && $mode == "edit") : ?>Edit <?= $data['category_name'] ?><?php else : ?>Create New Category<?php endif ?> </title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -103,8 +103,8 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-8">
                                         <div class="page-header-title">
-                                            <h5 class="m-b-10">Create Category</h5>
-                                            <p class="m-b-0">Hello <?= session('name') ?>! you can create new categry in this section</p>
+                                            <h5 class="m-b-10"> <?php if (isset($mode) && $mode == "edit") : ?>Edit<?php else : ?>Create<?php endif ?> Category</h5>
+                                            <p class="m-b-0">Hello <?= session('name') ?>! you can <?php if (isset($mode) && $mode == "edit") : ?>edit <?php else : ?>create new<?php endif ?> categry in this section</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -114,7 +114,7 @@
                                             </li>
                                             <li class="breadcrumb-item"><a href="<?= site_url() ?>admin/category-list">Manage Category</a>
                                             </li>
-                                            <li class="breadcrumb-item"><a href="#!">Create Category</a>
+                                            <li class="breadcrumb-item"><a href="#!"><?php if (isset($mode) && $mode == "edit") : ?>Edit<?php else : ?>Create<?php endif ?> Category</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -136,7 +136,7 @@
 
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Add New</h5>
+                                                        <h5><?php if (isset($mode) && $mode == "edit") : ?>Edit Category<?php else : ?>Add New<?php endif ?> </h5>
                                                         <!-- <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="fa fa-chevron-left"></i></li>
@@ -148,14 +148,18 @@
                                                         </div> -->
                                                     </div>
                                                     <div class="card-block">
-                                                        <?= form_open(site_url() . "Backend/Category/createCategory") ?>
+                                                        <?php if (isset($mode) && $mode == "edit") : ?>
+                                                            <?= form_open("") ?>
+                                                        <?php else : ?>
+                                                            <?= form_open(site_url() . "Backend/Category/createCategory") ?>
+                                                        <?php endif ?>
                                                         <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Category</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="category_name" class="form-control" required value="<?= old('category_name') ?>">
+                                                                <input type="text" name="category_name" class="form-control" required value="<?php if (isset($mode) && $mode == "edit") : ?><?= $data['category_name'] ?><?php old('category_name') ?><?php endif ?>">
                                                             </div>
                                                         </div>
-                                                        <button type="submit" class="btn btn-success">Create New</button>
+                                                        <button type="submit" class="btn btn-success"><?php if (isset($mode) && $mode == "edit") : ?>Update<?php else : ?>Create New<?php endif ?> </button>
 
                                                         <?= form_close() ?>
                                                     </div>
