@@ -11,6 +11,6 @@ class Category extends Model
     protected $useTimestamps = true;
 
     protected $validationRules    = [
-        'category_name'    => 'required|alpha_numeric_space'
+        'category_name'    => 'required|alpha_numeric_space',
     ];
 }

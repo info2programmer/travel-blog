@@ -38,6 +38,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/admin/login', 'Backend/Adminauthentication::index');
 $routes->get('/admin/dashboard', 'Backend/Dashboard::index');
 $routes->get('/admin/category-list', 'Backend/Category::index');
+$routes->get('/admin/category-add', 'Backend/Category::createCategory');
 
 /*
  * --------------------------------------------------------------------

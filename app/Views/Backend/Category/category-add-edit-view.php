@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Manage Category </title>
+    <title>Create New Category </title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -17,7 +17,7 @@
     <meta name="keywords" content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="codedthemes" />
     <!-- Favicon icon -->
-    <link rel="icon" href="<?= site_url() ?><?= site_url() ?>assets/backend/backend/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?= site_url() ?>assets/backend/images/favicon.ico" type="image/x-icon">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <!-- Required Fremwork -->
@@ -103,18 +103,18 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-8">
                                         <div class="page-header-title">
-                                            <h5 class="m-b-10">Manage Category</h5>
-                                            <p class="m-b-0">Hello <?= session('name') ?> you can manage categoies in here</p>
+                                            <h5 class="m-b-10">Create Category</h5>
+                                            <p class="m-b-0">Hello <?= session('name') ?>! you can create new categry in this section</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <ul class="breadcrumb-title">
                                             <li class="breadcrumb-item">
-                                                <a href="<?= site_url() ?>admin/dashboard"> <i class=" fa fa-home"></i> </a>
+                                                <a href="<?= site_url() ?>admin/dashboard"> <i class="fa fa-home"></i> </a>
                                             </li>
-                                            <li class="breadcrumb-item"><a href="<?= site_url() ?>admin/dashboard">Dashboard</a>
+                                            <li class="breadcrumb-item"><a href="<?= site_url() ?>admin/category-list">Manage Category</a>
                                             </li>
-                                            <li class="breadcrumb-item"><a href="#!">Manage Category</a>
+                                            <li class="breadcrumb-item"><a href="#!">Create Category</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -128,46 +128,36 @@
                                     <div class="page-body">
                                         <div class="row">
                                             <div class="col-sm-12">
+                                                <?php if (session()->has('errors')) : ?>
+                                                    <?php foreach (session('errors') as $list) : ?>
+                                                        <p class="alert alert-danger"><?= $list ?></p>
+                                                    <?php endforeach ?>
+                                                <?php endif ?>
+
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Category List</h5>
-                                                        <div class="card-header-right">
-                                                            <a class="btn btn-success" href="<?= site_url() ?>admin/category-add">Add New</a>
-                                                        </div>
+                                                        <h5>Add New</h5>
+                                                        <!-- <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li><i class="fa fa-chevron-left"></i></li>
+                                                                <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                                <li><i class="fa fa-minus minimize-card"></i></li>
+                                                                <li><i class="fa fa-refresh reload-card"></i></li>
+                                                                <li><i class="fa fa-times close-card"></i></li>
+                                                            </ul>
+                                                        </div> -->
                                                     </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>Category Name</th>
-                                                                        <th>Added By</th>
-                                                                        <th>Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <?php $i = 0; ?>
-                                                                    <?php foreach ($data as $list) : ?>
-                                                                        <tr>
-                                                                            <th scope="row"><?= ++$i ?></th>
-                                                                            <td><?= $list['category_name'] ?></td>
-                                                                            <td><?= $list['name'] ?></td>
-                                                                            <td>
-                                                                                <a class="btn btn-warning">Edit</a>
-                                                                                <a class="btn btn danger">Delete</a>
-                                                                                <?php if ($list['publised'] == "1") : ?>
-                                                                                    <a class="btn btn-primary">Un-Publish</a>
-                                                                                <?php else : ?>
-                                                                                    <a class="btn btn-info">Publish</a>
-                                                                                <?php endif ?>
-                                                                            </td>
-                                                                        </tr>
-                                                                    <?php endforeach ?>
-
-                                                                </tbody>
-                                                            </table>
+                                                    <div class="card-block">
+                                                        <?= form_open(site_url() . "Backend/Category/createCategory") ?>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">Category</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="category_name" class="form-control" required value="<?= old('category_name') ?>">
+                                                            </div>
                                                         </div>
+                                                        <button type="submit" class="btn btn-success">Create New</button>
+
+                                                        <?= form_close() ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,50 +176,6 @@
     </div>
 
 
-    <!-- Warning Section Starts -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 10]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers
-        to access this website.</p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="<?= site_url() ?>assets/backend/images/browser/chrome.png" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="<?= site_url() ?>assets/backend/images/browser/firefox.png" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="<?= site_url() ?>assets/backend/images/browser/opera.png" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="<?= site_url() ?>assets/backend/images/browser/safari.png" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="<?= site_url() ?>assets/backend/images/browser/ie.png" alt="">
-                    <div>IE (9 & above)</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-</div>
-<![endif]-->
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
     <script type="text/javascript" src="<?= site_url() ?>assets/backend/js/jquery/jquery.min.js"></script>
