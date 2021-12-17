@@ -40,6 +40,9 @@ $routes->get('/admin/dashboard', 'Backend/Dashboard::index');
 $routes->get('/admin/category-list', 'Backend/Category::index');
 $routes->get('/admin/category-add', 'Backend/Category::createCategory');
 
+$routes->get('/admin/blog-list', 'Backend/Blog::index');
+$routes->get('/admin/blog-add', 'Backend/Blog::createBlog');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
