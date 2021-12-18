@@ -169,6 +169,14 @@
                                                                 <textarea name="blog_details" class="form-control" id="blog_details" rows="10"><?php if (isset($mode) && $mode == "edit") : ?><?= $data['blog_details'] ?><?php else : ?><?php old('blog_details') ?><?php endif ?></textarea>
                                                             </div>
                                                         </div>
+                                                        <?php if (isset($mode) && $mode == "edit") : ?>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-2 col-form-label">Old Image</label>
+                                                                <div class="col-sm-10">
+                                                                    <img src="<?= site_url() ?>backend/blog/image/<?= $data['blog_image'] ?>" alt="">
+                                                                </div>
+                                                            </div>
+                                                        <?php endif ?>
 
                                                         <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Image</label>
@@ -190,7 +198,7 @@
                                                                 <select name="category_id" id="category_id" class="form-control">
                                                                     <option value="">Select Category</option>
                                                                     <?php foreach ($category as $list) : ?>
-                                                                        <option value="<?= $list['id'] ?>"><?= $list['category_name'] ?></option>
+                                                                        <option value="<?= $list['id'] ?>" <?php if (isset($mode) && $mode == "edit" && $list['id'] == $data['category_id']) : ?>selected<?php endif ?>><?= $list['category_name'] ?></option>
                                                                     <?php endforeach ?>
                                                                 </select>
                                                             </div>

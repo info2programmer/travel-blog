@@ -116,4 +116,85 @@ class Blog extends BaseController
         // dd($this->categoryModel->getLastQuery()->getQuery());
         return view('Backend/Blog/blog-add-edit-view', ['category' => $category]);
     }
+
+    public function editBlog($id)
+    {
+        $blog = $this->blogModel->find($id);
+
+        if ($blog) {
+            if ($this->request->getMethod() == "post") {
+
+                $blog_title = esc($this->request->getPost('blog_title'));
+                $blog_details = $this->request->getPost('blog_details');
+                $blog_image = $blog['blog_image'];
+                $youtube_link = $this->request->getPost('youtube_link');
+                $category_id = $this->request->getPost('category_id');
+
+
+                $file = $this->request->getFile('blog_image');
+
+                if ($file->isValid()) {
+                    $size = $file->getSizeByUnit('mb');
+
+                    if ($size > 2) {
+
+                        return redirect()->to('admin/blog-add')
+                            ->with('warning', 'File too large (max 2MB)');
+                    }
+
+                    $type = $file->getMimeType();
+
+                    if (!in_array($type, ['image/png', 'image/jpeg'])) {
+
+                        return redirect()->to('admin/blog-add')
+                            ->with('warning', 'Invalid file format (PNG or JPEG only)');
+                    }
+
+                    $path = $file->store('blogs');
+
+                    $path = WRITEPATH . 'uploads/' . $path;
+
+                    service('image')
+                        ->withFile($path)
+                        ->fit(440, 220, 'center')
+                        ->save($path);
+
+                    $blog_image = $file->getName();
+                }
+
+
+
+                $obj = [
+                    'blog_title' => $blog_title,
+                    'blog_details' => $blog_details,
+                    'blog_image' => $blog_image,
+                    'youtube_link' => $youtube_link,
+                    'category_id' => $category_id,
+                ];
+
+                if ($this->blogModel->update($id, $obj)) {
+                    return redirect()->to('admin/blog-list');
+                } else {
+                    return redirect()->to('admin/blog-list')
+                        ->with('errors', $this->blogModel->errors());
+                }
+            }
+
+            $category = $this->categoryModel->where('publised', 1)->findAll();
+            // $img = $this->image($blog['blog_image']);
+            return view('Backend/Blog/blog-add-edit-view', ['category' => $category, 'mode' => 'edit', 'data' => $blog]);
+        } else {
+            return redirect()->to('admin/blog-list')->with('error', 'No blog found');
+        }
+    }
+
+    public function image($img)
+    {
+        $path = WRITEPATH . 'uploads/blogs/' . $img;
+        $finfo = new \finfo(FILEINFO_MIME);
+        $type = $finfo->file($path);
+        header("Content-Type: $type");
+        header("Content-Length: " . filesize($path));
+        readfile($path);
+    }
 }
