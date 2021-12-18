@@ -134,6 +134,13 @@ class Blog extends BaseController
                 $file = $this->request->getFile('blog_image');
 
                 if ($file->isValid()) {
+
+                    // Unlink Old Image
+                    $path = WRITEPATH . 'uploads/blogs/' . $blog_image;
+                    if (is_file($path)) {
+                        unlink($path);
+                    }
+
                     $size = $file->getSizeByUnit('mb');
 
                     if ($size > 2) {
