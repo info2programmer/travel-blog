@@ -204,4 +204,33 @@ class Blog extends BaseController
         header("Content-Length: " . filesize($path));
         readfile($path);
     }
+
+
+    public function changeStatus($id, $status)
+    {
+        $category = $this->blogModel->find($id);
+        if ($category) {
+            $this->blogModel->update($id, ['publised' => $status]);
+            return redirect()->to(site_url() . "admin/blog-list")->with('success', "blog status updated");
+        } else {
+            return redirect()->to(site_url() . "admin/blog-list")->with('error', "no blog found");
+        }
+    }
+
+
+    public function deleteData($id)
+    {
+        $blog = $this->blogModel->find($id);
+
+        if ($blog) {
+            $path = WRITEPATH . 'uploads/blogs/' . $blog['blog_image'];
+            if (is_file($path)) {
+                unlink($path);
+            }
+            $this->blogModel->delete($id);
+            return redirect()->to(site_url() . "admin/blog-list")->with('error', "blog deleted");
+        } else {
+            return redirect()->to(site_url() . "admin/blog-list")->with('error', "no blog found");
+        }
+    }
 }
