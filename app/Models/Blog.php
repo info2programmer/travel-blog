@@ -11,7 +11,7 @@ class Blog extends Model
     protected $useTimestamps = true;
 
     protected $validationRules    = [
-        'blog_title'    => 'required|alpha_numeric_space',
+        'blog_title'    => 'required',
         'blog_details'  => 'required',
         'blog_image'  => 'required',
         'category_id' => 'required',
